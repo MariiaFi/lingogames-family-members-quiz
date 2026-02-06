@@ -1,0 +1,588 @@
+/* Сброс и базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Шапка */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+header h1 {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+header h1 i {
+    color: #3498db;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Основное содержимое */
+main {
+    position: relative;
+    min-height: 500px;
+}
+
+.screen {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Карточки */
+.card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-card {
+    text-align: center;
+}
+
+.welcome-card h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.welcome-card p {
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 1.05rem;
+}
+
+/* Статистика */
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 150px;
+    transition: all 0.3s ease;
+}
+
+.stat:hover {
+    background-color: #e9ecef;
+    transform: scale(1.05);
+}
+
+.stat i {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 8px;
+}
+
+.stat span {
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Инструкции */
+.instructions {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+    text-align: left;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.instructions ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    padding-left: 30px;
+    position: relative;
+}
+
+.instructions li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* Кнопки */
+button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: white;
+    font-size: 1.1rem;
+    padding: 18px 35px;
+    margin-top: 10px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background-color: #f1f2f6;
+    color: #2c3e50;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #dfe4ea;
+    transform: translateY(-2px);
+}
+
+/* Заголовок викторины */
+.quiz-header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.progress-container {
+    width: 100%;
+}
+
+.progress-bar {
+    height: 12px;
+    background-color: #ecf0f1;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border-radius: 6px;
+    width: 5%;
+    transition: width 0.5s ease;
+}
+
+.progress-text {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.score-container {
+    background-color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.score {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.score span {
+    color: #27ae60;
+    font-size: 1.3rem;
+}
+
+/* Карточка вопроса */
+.question-card {
+    text-align: center;
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.question-header h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.question-type {
+    background-color: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #7f8c8d;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.question-content {
+    margin-bottom: 30px;
+}
+
+.russian-word {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.translation-direction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    color: #7f8c8d;
+    font-weight: 600;
+}
+
+.lang-label {
+    background-color: #f8f9fa;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.translation-direction i {
+    color: #3498db;
+    font-size: 1.5rem;
+}
+
+/* Контейнер ответов */
+.answers-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+@media (min-width: 600px) {
+    .answers-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.answer-btn {
+    background-color: #f8f9fa;
+    border: 2px solid #dfe4ea;
+    padding: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.answer-btn:hover:not(:disabled) {
+    background-color: #e9ecef;
+    border-color: #3498db;
+    transform: translateY(-3px);
+}
+
+.answer-btn.selected {
+    border-width: 3px;
+}
+
+.answer-btn.correct {
+    background-color: #d4edda;
+    border-color: #27ae60;
+    color: #155724;
+}
+
+.answer-btn.incorrect {
+    background-color: #f8d7da;
+    border-color: #e74c3c;
+    color: #721c24;
+}
+
+/* Обратная связь */
+.feedback {
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.correct {
+    background-color: #d4edda;
+    border-left: 5px solid #27ae60;
+}
+
+.feedback.incorrect {
+    background-color: #f8d7da;
+    border-left: 5px solid #e74c3c;
+}
+
+.feedback-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.feedback i {
+    font-size: 1.8rem;
+}
+
+.feedback.correct i {
+    color: #27ae60;
+}
+
+.feedback.incorrect i {
+    color: #e74c3c;
+}
+
+.feedback-text {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Навигация */
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Карточка результатов */
+.result-card {
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 4rem;
+    color: #f1c40f;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-15px); }
+}
+
+.result-card h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+.score-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 25px;
+}
+
+.score-percent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.final-score {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+.final-score span {
+    color: #27ae60;
+    font-size: 1.8rem;
+}
+
+.result-message {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Подвал */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer-note {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    color: #95a5a6;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .russian-word {
+        font-size: 2.8rem;
+    }
+    
+    .stats {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .russian-word {
+        font-size: 2.2rem;
+    }
+    
+    .question-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .navigation {
+        justify-content: center;
+    }
+    
+    .navigation button {
+        width: 100%;
+    }
+}
