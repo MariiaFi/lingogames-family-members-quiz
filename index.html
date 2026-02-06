@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЛингоИгры: Члены семьи</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍👩‍👧‍👦</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-users"></i> ЛингоИгры: Члены семьи</h1>
+            <p class="subtitle">Викторина для изучения английской лексики</p>
+        </header>
+
+        <main>
+            <!-- Стартовый экран -->
+            <div id="start-screen" class="screen active">
+                <div class="card welcome-card">
+                    <h2><i class="fas fa-gamepad"></i> Начните викторину!</h2>
+                    <p>Проверьте свои знания английских слов на тему "Члены семьи".</p>
+                    <p>Вам будет предложено 20 вопросов. Для каждого русского слова выберите правильный перевод на английский.</p>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <i class="fas fa-question-circle"></i>
+                            <span>20 вопросов</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-language"></i>
+                            <span>Русский → Английский</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-shuffle"></i>
+                            <span>Случайный порядок</span>
+                        </div>
+                    </div>
+                    
+                    <button id="start-btn" class="btn-primary">
+                        <i class="fas fa-play"></i> Начать викторину
+                    </button>
+                    
+                    <div class="instructions">
+                        <h3><i class="fas fa-lightbulb"></i> Как играть:</h3>
+                        <ul>
+                            <li>Прочитайте слово на русском языке</li>
+                            <li>Выберите правильный перевод из четырёх вариантов</li>
+                            <li>Получайте мгновенную обратную связь</li>
+                            <li>Постарайтесь набрать как можно больше баллов!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Экран викторины -->
+            <div id="quiz-screen" class="screen">
+                <div class="quiz-header">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">Вопрос 1 из 20</div>
+                    </div>
+                    
+                    <div class="score-container">
+                        <div class="score" id="score">Правильно: <span>0</span> / 20</div>
+                    </div>
+                </div>
+                
+                <div class="card question-card">
+                    <div class="question-header">
+                        <h2 id="question-number">Вопрос 1</h2>
+                        <div class="question-type">
+                            <i class="fas fa-arrow-right"></i> Переведите слово
+                        </div>
+                    </div>
+                    
+                    <div class="question-content">
+                        <div class="russian-word" id="russian-word">мама</div>
+                        <div class="translation-direction">
+                            <span class="lang-label">русский</span>
+                            <i class="fas fa-long-arrow-alt-right"></i>
+                            <span class="lang-label">английский</span>
+                        </div>
+                    </div>
+                    
+                    <div class="answers-container" id="answers-container">
+                        <!-- Варианты ответов будут добавляться через JavaScript -->
+                    </div>
+                    
+                    <div class="feedback" id="feedback">
+                        <!-- Сообщение обратной связи будет добавляться через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button id="next-btn" class="btn-secondary" disabled>
+                        <i class="fas fa-forward"></i> Следующий вопрос
+                    </button>
+                </div>
+            </div>
+
+            <!-- Экран результатов -->
+            <div id="result-screen" class="screen">
+                <div class="card result-card">
+                    <div class="result-icon" id="result-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    
+                    <h2 id="result-title">Викторина завершена!</h2>
+                    
+                    <div class="score-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="#f0f0f0" stroke-width="12"></circle>
+                            <circle id="score-circle" cx="60" cy="60" r="54" fill="none" stroke="#4CAF50" stroke-width="12" stroke-linecap="round" stroke-dasharray="339.292" stroke-dashoffset="339.292"></circle>
+                            <text x="60" y="65" text-anchor="middle" font-size="24" font-weight="bold" fill="#333" id="circle-score">0</text>
+                        </svg>
+                        <div class="score-percent" id="score-percent">0%</div>
+                    </div>
+                    
+                    <div class="final-score" id="final-score">
+                        Вы правильно ответили на <span id="correct-answers">0</span> из 20 вопросов
+                    </div>
+                    
+                    <div class="result-message" id="result-message">
+                        <!-- Сообщение с результатом будет добавляться через JavaScript -->
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="restart-btn" class="btn-primary">
+                            <i class="fas fa-redo"></i> Пройти заново
+                        </button>
+                        <button id="back-to-start-btn" class="btn-secondary">
+                            <i class="fas fa-home"></i> На главную
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>ЛингоИгры &copy; 2023 | Викторина "Члены семьи" | Образовательный проект</p>
+            <p class="footer-note">Игра работает полностью оффлайн, совместима с мобильными устройствами</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
