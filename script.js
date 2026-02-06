@@ -373,4 +373,74 @@ function finishGame() {
 /**
  * Обновление счета в интерфейсе
  */
-function updateScore()
+function updateScore() {
+    const scoreSpan = domElements.scoreElement.querySelector('span');
+    scoreSpan.textContent = gameState.score;
+}
+
+/**
+ * Обновление индикатора прогресса
+ */
+function updateProgress() {
+    const progressPercentage = ((gameState.currentQuestionIndex + 1) / GAME_CONFIG.totalQuestions) * 100;
+    domElements.progressFill.style.width = `${progressPercentage}%`;
+    domElements.progressText.textContent = `Вопрос ${gameState.currentQuestionIndex + 1} из ${GAME_CONFIG.totalQuestions}`;
+}
+
+/**
+ * Перезапуск игры
+ */
+function restartGame() {
+    // Сбрасываем состояние игры
+    gameState.currentQuestionIndex = 0;
+    gameState.score = 0;
+    gameState.selectedAnswer = null;
+    gameState.gameCompleted = false;
+    
+    // Перемешиваем вопросы заново
+    prepareQuestions();
+    
+    // Обновляем интерфейс
+    updateScore();
+    
+    // Показываем первый вопрос
+    showQuestion();
+    
+    // Переключаемся на экран викторины
+    showScreen('quiz-screen');
+    
+    console.log('Игра перезапущена!');
+}
+
+/**
+ * Возврат на стартовый экран
+ */
+function goToStartScreen() {
+    showScreen('start-screen');
+}
+
+/**
+ * Переключение между экранами
+ * @param {string} screenId - ID экрана для отображения
+ */
+function showScreen(screenId) {
+    // Скрываем все экраны
+    domElements.startScreen.classList.remove('active');
+    domElements.quizScreen.classList.remove('active');
+    domElements.resultScreen.classList.remove('active');
+    
+    // Показываем выбранный экран
+    document.getElementById(screenId).classList.add('active');
+}
+
+// Инициализация игры при загрузке страницы
+document.addEventListener('DOMContentLoaded', initGame);
+
+// Экспорт объектов для отладки (в реальном приложении не требуется)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        VOCABULARY,
+        GAME_CONFIG,
+        gameState
+    };
+}
