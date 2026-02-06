@@ -1,5 +1,5 @@
 /**
- * ЛингоИгры: Викторина "Członkowie rodziny" (польский)
+ * Викторина "Польский язык: Члены семьи"
  * Полностью оффлайн-игра для изучения польской лексики
  */
 
@@ -12,31 +12,37 @@ const GAME_CONFIG = {
 
 // Словарь: польские слова и их русские переводы
 const VOCABULARY = [
-    { polish: "matka", russian: "мама", english: "mother" },
-    { polish: "ojciec", russian: "папа", english: "father" },
-    { polish: "rodzice", russian: "родители", english: "parents" },
-    { polish: "siostra", russian: "сестра", english: "sister" },
-    { polish: "brat", russian: "брат", english: "brother" },
-    { polish: "rodzeństwo", russian: "братья и сёстры", english: "siblings" },
-    { polish: "babcia", russian: "бабушка", english: "grandmother" },
-    { polish: "dziadek", russian: "дедушка", english: "grandfather" },
-    { polish: "dziadkowie", russian: "бабушка и дедушка", english: "grandparents" },
-    { polish: "ciocia", russian: "тётя", english: "aunt" },
-    { polish: "wujek", russian: "дядя", english: "uncle" },
-    { polish: "kuzyn / kuzynka", russian: "двоюродный брат / сестра", english: "cousin" },
-    { polish: "córka", russian: "дочь", english: "daughter" },
-    { polish: "syn", russian: "сын", english: "son" },
-    { polish: "dzieci", russian: "дети", english: "children" },
-    { polish: "żona", russian: "жена", english: "wife" },
-    { polish: "mąż", russian: "муж", english: "husband" },
-    { polish: "rodzina", russian: "семья", english: "family" },
-    { polish: "krewny / krewna", russian: "родственник", english: "relative" },
-    { polish: "siostrzenica", russian: "племянница", english: "niece" },
-    { polish: "bratanek", russian: "племянник", english: "nephew" },
-    { polish: "teściowa", russian: "тёща / свекровь", english: "mother-in-law" },
-    { polish: "teść", russian: "тёсть / свёкор", english: "father-in-law" },
-    { polish: "szwagier", russian: "шурин / деверь", english: "brother-in-law" },
-    { polish: "szwagierka", russian: "золовка / невестка", english: "sister-in-law" }
+    { polish: "matka", russian: "мама" },
+    { polish: "ojciec", russian: "папа" },
+    { polish: "rodzice", russian: "родители" },
+    { polish: "siostra", russian: "сестра" },
+    { polish: "brat", russian: "брат" },
+    { polish: "rodzeństwo", russian: "братья и сёстры" },
+    { polish: "babcia", russian: "бабушка" },
+    { polish: "dziadek", russian: "дедушка" },
+    { polish: "dziadkowie", russian: "бабушка и дедушка" },
+    { polish: "ciocia", russian: "тётя" },
+    { polish: "wujek", russian: "дядя" },
+    { polish: "kuzyn", russian: "двоюродный брат" },
+    { polish: "kuzynka", russian: "двоюродная сестра" },
+    { polish: "córka", russian: "дочь" },
+    { polish: "syn", russian: "сын" },
+    { polish: "dzieci", russian: "дети" },
+    { polish: "żona", russian: "жена" },
+    { polish: "mąż", russian: "муж" },
+    { polish: "rodzina", russian: "семья" },
+    { polish: "krewny", russian: "родственник (м)" },
+    { polish: "krewna", russian: "родственница (ж)" },
+    { polish: "siostrzenica", russian: "племянница" },
+    { polish: "bratanek", russian: "племянник" },
+    { polish: "teściowa", russian: "тёща / свекровь" },
+    { polish: "teść", russian: "тёсть / свёкор" },
+    { polish: "szwagier", russian: "шурин / деверь" },
+    { polish: "szwagierka", russian: "золовка / невестка" },
+    { polish: "wnuk", russian: "внук" },
+    { polish: "wnuczka", russian: "внучка" },
+    { polish: "prababcia", russian: "прабабушка" },
+    { polish: "pradziadek", russian: "прадедушка" }
 ];
 
 // Состояние игры
@@ -50,15 +56,18 @@ const gameState = {
 
 // Элементы DOM
 const domElements = {
+    // Экран
     startScreen: document.getElementById('start-screen'),
     quizScreen: document.getElementById('quiz-screen'),
     resultScreen: document.getElementById('result-screen'),
     
+    // Кнопки
     startBtn: document.getElementById('start-btn'),
     nextBtn: document.getElementById('next-btn'),
     restartBtn: document.getElementById('restart-btn'),
     backToStartBtn: document.getElementById('back-to-start-btn'),
     
+    // Элементы викторины
     progressFill: document.getElementById('progress-fill'),
     progressText: document.getElementById('progress-text'),
     scoreElement: document.getElementById('score'),
@@ -67,6 +76,7 @@ const domElements = {
     answersContainer: document.getElementById('answers-container'),
     feedback: document.getElementById('feedback'),
     
+    // Элементы результатов
     resultIcon: document.getElementById('result-icon'),
     resultTitle: document.getElementById('result-title'),
     scoreCircle: document.getElementById('score-circle'),
@@ -81,15 +91,19 @@ const domElements = {
  * Инициализация игры при загрузке страницы
  */
 function initGame() {
+    // Настройка обработчиков событий для кнопок
     domElements.startBtn.addEventListener('click', startGame);
     domElements.nextBtn.addEventListener('click', nextQuestion);
     domElements.restartBtn.addEventListener('click', restartGame);
     domElements.backToStartBtn.addEventListener('click', goToStartScreen);
     
+    // Показываем стартовый экран
     showScreen('start-screen');
+    
+    // Готовим список вопросов (перемешиваем)
     prepareQuestions();
     
-    console.log('Gra "Członkowie rodziny" zainicjalizowana. Gotowa do uruchomienia!');
+    console.log('Викторина "Польский язык: Члены семьи" инициализирована!');
 }
 
 /**
@@ -102,25 +116,33 @@ function prepareQuestions() {
         .slice(0, GAME_CONFIG.totalQuestions);
     
     gameState.questions = shuffledVocabulary;
-    console.log(`Przygotowano ${gameState.questions.length} pytań`);
+    console.log(`Подготовлено ${gameState.questions.length} вопросов`);
 }
 
 /**
  * Запуск игры
  */
 function startGame() {
+    // Сброс состояния игры
     gameState.currentQuestionIndex = 0;
     gameState.score = 0;
     gameState.selectedAnswer = null;
     gameState.gameCompleted = false;
     
+    // Перемешиваем вопросы заново
     prepareQuestions();
+    
+    // Обновляем интерфейс
     updateScore();
     updateProgress();
+    
+    // Показываем первый вопрос
     showQuestion();
+    
+    // Переключаемся на экран викторины
     showScreen('quiz-screen');
     
-    console.log('Gra rozpoczęta!');
+    console.log('Игра началась!');
 }
 
 /**
@@ -129,27 +151,36 @@ function startGame() {
 function showQuestion() {
     const question = gameState.questions[gameState.currentQuestionIndex];
     
-    domElements.questionNumber.textContent = `Pytanie ${gameState.currentQuestionIndex + 1}`;
+    // Обновляем номер вопроса
+    domElements.questionNumber.textContent = `Вопрос ${gameState.currentQuestionIndex + 1}`;
+    
+    // Обновляем русское слово
     domElements.russianWord.textContent = question.russian;
     
+    // Генерируем варианты ответов (польские слова)
     generateAnswerOptions(question);
     
+    // Сбрасываем выбранный ответ и обратную связь
     gameState.selectedAnswer = null;
     domElements.feedback.classList.remove('show', 'correct', 'incorrect');
     domElements.nextBtn.disabled = true;
     
+    // Обновляем прогресс
     updateProgress();
 }
 
 /**
  * Генерация вариантов ответов для вопроса
+ * @param {Object} correctQuestion - Текущий вопрос с правильным ответом
  */
 function generateAnswerOptions(correctQuestion) {
+    // Очищаем контейнер ответов
     domElements.answersContainer.innerHTML = '';
     
+    // Создаем массив с вариантами ответов
     let answerOptions = [correctQuestion.polish];
     
-    // Добавляем случайные неправильные варианты
+    // Добавляем случайные неправильные варианты из словаря
     const otherWords = VOCABULARY
         .filter(item => item.polish !== correctQuestion.polish)
         .sort(() => Math.random() - 0.5)
@@ -157,40 +188,62 @@ function generateAnswerOptions(correctQuestion) {
         .map(item => item.polish);
     
     answerOptions = [...answerOptions, ...otherWords];
+    
+    // Перемешиваем варианты ответов
     answerOptions = answerOptions.sort(() => Math.random() - 0.5);
     
+    // Создаем кнопки для каждого варианта ответа
     answerOptions.forEach(option => {
         const button = document.createElement('button');
         button.className = 'answer-btn';
         button.textContent = option;
         button.dataset.answer = option;
         
+        // Добавляем обработчик события
         button.addEventListener('click', () => selectAnswer(option, button));
+        
+        // Добавляем кнопку в контейнер
         domElements.answersContainer.appendChild(button);
     });
 }
 
 /**
  * Обработка выбора ответа пользователем
+ * @param {string} selectedAnswer - Выбранный ответ (польское слово)
+ * @param {HTMLElement} buttonElement - Элемент кнопки
  */
 function selectAnswer(selectedAnswer, buttonElement) {
+    // Если ответ уже выбран, игнорируем
     if (gameState.selectedAnswer !== null) return;
     
     const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
     const isCorrect = selectedAnswer === currentQuestion.polish;
     
+    // Сохраняем выбранный ответ
     gameState.selectedAnswer = selectedAnswer;
+    
+    // Отмечаем выбранную кнопку
     buttonElement.classList.add('selected');
     
+    // Проверяем правильность ответа
     if (isCorrect) {
+        // Увеличиваем счет
         gameState.score++;
         updateScore();
-        showFeedback(true, `Poprawnie! "${currentQuestion.russian}" → "${currentQuestion.polish}" (ang: ${currentQuestion.english})`);
+        
+        // Показываем позитивную обратную связь
+        showFeedback(true, `Правильно! "${currentQuestion.russian}" → "${currentQuestion.polish}"`);
+        
+        // Подсвечиваем правильный ответ зеленым
         buttonElement.classList.add('correct');
     } else {
-        showFeedback(false, `Niepoprawnie. Prawidłowa odpowiedź: "${currentQuestion.polish}" (ang: ${currentQuestion.english})`);
+        // Показываем негативную обратную связь
+        showFeedback(false, `Неправильно. Правильный ответ: "${currentQuestion.polish}"`);
+        
+        // Подсвечиваем неправильный ответ красным
         buttonElement.classList.add('incorrect');
         
+        // Находим и подсвечиваем правильный ответ зеленым
         const correctButton = Array.from(domElements.answersContainer.children)
             .find(btn => btn.dataset.answer === currentQuestion.polish);
         if (correctButton) {
@@ -198,7 +251,10 @@ function selectAnswer(selectedAnswer, buttonElement) {
         }
     }
     
+    // Активируем кнопку "Следующий вопрос"
     domElements.nextBtn.disabled = false;
+    
+    // Отключаем все кнопки ответов
     const allAnswerButtons = domElements.answersContainer.querySelectorAll('.answer-btn');
     allAnswerButtons.forEach(btn => {
         btn.disabled = true;
@@ -207,12 +263,18 @@ function selectAnswer(selectedAnswer, buttonElement) {
 
 /**
  * Показать обратную связь
+ * @param {boolean} isCorrect - Правильный ли ответ
+ * @param {string} message - Сообщение для отображения
  */
 function showFeedback(isCorrect, message) {
+    // Очищаем предыдущую обратную связь
     domElements.feedback.innerHTML = '';
+    
+    // Устанавливаем классы и содержимое
     domElements.feedback.className = 'feedback';
     domElements.feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
     
+    // Создаем содержимое обратной связи
     const icon = document.createElement('i');
     icon.className = isCorrect ? 'fas fa-check-circle' : 'fas fa-times-circle';
     
@@ -233,11 +295,14 @@ function showFeedback(isCorrect, message) {
  * Переход к следующему вопросу
  */
 function nextQuestion() {
+    // Увеличиваем индекс текущего вопроса
     gameState.currentQuestionIndex++;
     
+    // Проверяем, завершена ли игра
     if (gameState.currentQuestionIndex >= gameState.questions.length) {
         finishGame();
     } else {
+        // Показываем следующий вопрос
         showQuestion();
     }
 }
@@ -246,115 +311,43 @@ function nextQuestion() {
  * Завершение игры и показ результатов
  */
 function finishGame() {
+    // Устанавливаем флаг завершения игры
     gameState.gameCompleted = true;
+    
+    // Рассчитываем процент правильных ответов
     const percentage = Math.round((gameState.score / GAME_CONFIG.totalQuestions) * 100);
     
+    // Обновляем элементы на экране результатов
     domElements.circleScore.textContent = gameState.score;
     domElements.scorePercent.textContent = `${percentage}%`;
     domElements.correctAnswers.textContent = gameState.score;
     
+    // Устанавливаем сообщение в зависимости от результата
     let message = '';
-    let title = 'Quiz zakończony!';
+    let title = 'Викторина завершена!';
     let iconClass = 'fas fa-trophy';
     let iconColor = '#f1c40f';
     
     if (percentage === 100) {
-        message = 'Niesamowicie! Znasz wszystkie słowa na temat "Członkowie rodziny"! Perfekcyjny wynik! 🎉';
-        title = 'Wynik perfekcyjny!';
+        message = 'Потрясающе! Вы знаете все польские слова на тему "Члены семьи"! Идеальный результат! 🎉';
+        title = 'Безупречный результат!';
         iconClass = 'fas fa-crown';
         iconColor = '#f1c40f';
     } else if (percentage >= 80) {
-        message = 'Świetny wynik! Dobrze znasz słownictwo dotyczące rodziny. Tak trzymaj!';
-        title = 'Świetna robota!';
+        message = 'Отличный результат! Вы хорошо знаете польские слова на тему семьи. Так держать!';
+        title = 'Отлично справились!';
         iconClass = 'fas fa-star';
         iconColor = '#2ecc71';
     } else if (percentage >= 60) {
-        message = 'Dobry wynik! Znasz podstawowe słowa na temat rodziny. Kontynuuj praktykę!';
-        title = 'Dobra praca!';
+        message = 'Хороший результат! Вы знаете основные польские слова на тему семьи. Продолжайте практиковаться!';
+        title = 'Хорошая работа!';
         iconClass = 'fas fa-medal';
         iconColor = '#3498db';
     } else if (percentage >= 40) {
-        message = 'Nieźle! Jest miejsce na poprawę. Powtórz słówka i spróbuj ponownie!';
-        title = 'Można lepiej!';
+        message = 'Неплохой результат! Есть куда расти. Повторите польские слова и попробуйте снова!';
+        title = 'Можно лучше!';
         iconClass = 'fas fa-award';
         iconColor = '#9b59b6';
     } else {
-        message = 'Musisz powtórzyć słownictwo na temat "Członkowie rodziny". Spróbuj jeszcze raz, na pewno ci się uda!';
-        title = 'Spróbuj jeszcze raz!';
-        iconClass = 'fas fa-redo';
-        iconColor = '#e74c3c';
-    }
-    
-    domElements.resultTitle.textContent = title;
-    domElements.resultMessage.textContent = message;
-    domElements.resultIcon.innerHTML = `<i class="${iconClass}"></i>`;
-    domElements.resultIcon.style.color = iconColor;
-    
-    const circumference = 2 * Math.PI * 54;
-    const offset = circumference - (percentage / 100) * circumference;
-    
-    domElements.scoreCircle.style.strokeDashoffset = circumference;
-    
-    setTimeout(() => {
-        domElements.scoreCircle.style.transition = `stroke-dashoffset 1.5s ease`;
-        domElements.scoreCircle.style.strokeDashoffset = offset;
-    }, 300);
-    
-    showScreen('result-screen');
-    console.log(`Gra zakończona. Wynik: ${gameState.score}/${GAME_CONFIG.totalQuestions} (${percentage}%)`);
-}
-
-/**
- * Обновление счета в интерфейсе
- */
-function updateScore() {
-    const scoreSpan = domElements.scoreElement.querySelector('span');
-    scoreSpan.textContent = gameState.score;
-}
-
-/**
- * Обновление индикатора прогресса
- */
-function updateProgress() {
-    const progressPercentage = ((gameState.currentQuestionIndex + 1) / GAME_CONFIG.totalQuestions) * 100;
-    domElements.progressFill.style.width = `${progressPercentage}%`;
-    domElements.progressText.textContent = `Pytanie ${gameState.currentQuestionIndex + 1} z ${GAME_CONFIG.totalQuestions}`;
-}
-
-/**
- * Перезапуск игры
- */
-function restartGame() {
-    gameState.currentQuestionIndex = 0;
-    gameState.score = 0;
-    gameState.selectedAnswer = null;
-    gameState.gameCompleted = false;
-    
-    prepareQuestions();
-    updateScore();
-    showQuestion();
-    showScreen('quiz-screen');
-    
-    console.log('Gra ponownie uruchomiona!');
-}
-
-/**
- * Возврат на стартовый экран
- */
-function goToStartScreen() {
-    showScreen('start-screen');
-}
-
-/**
- * Переключение между экранами
- */
-function showScreen(screenId) {
-    domElements.startScreen.classList.remove('active');
-    domElements.quizScreen.classList.remove('active');
-    domElements.resultScreen.classList.remove('active');
-    
-    document.getElementById(screenId).classList.add('active');
-}
-
-// Инициализация игры при загрузке страницы
-document.addEventListener('DOMContentLoaded', initGame);
+        message = 'Вам нужно повторить польские слова на тему "Члены семьи". Попробуйте еще раз, и у вас обязательно получится!';
+        title = 'П
